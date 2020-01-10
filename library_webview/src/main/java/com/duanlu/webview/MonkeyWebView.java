@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi;
 import com.duanlu.webview.core.MonkeyWebChromeClient;
 import com.duanlu.webview.core.MonkeyWebViewClient;
 import com.duanlu.webview.exception.MonkeyException;
+import com.duanlu.webview.interceptor.MonkeyUrlInterceptor;
 import com.duanlu.webview.plugin.LifecycleProxyComposition;
 import com.duanlu.webview.settings.MonkeyWebSettings;
 import com.duanlu.webview.settings.MonkeyWebViewSafetyManager;
@@ -31,6 +32,7 @@ public class MonkeyWebView extends WebView {
     private static final boolean DEBUG = true;//true打开调试日志.
 
     private LifecycleProxyComposition mProxyComposition;
+    private MonkeyWebViewClient mMonkeyWebViewClient;
 
     public MonkeyWebView(Context context) {
         super(context);
@@ -62,7 +64,8 @@ public class MonkeyWebView extends WebView {
         this.mProxyComposition = new LifecycleProxyComposition();
 
         this.setWebChromeClient(new MonkeyWebChromeClient());
-        this.setWebViewClient(new MonkeyWebViewClient());
+        mMonkeyWebViewClient = new MonkeyWebViewClient();
+        this.setWebViewClient(mMonkeyWebViewClient);
     }
 
     public void useDefaultSetting() {
@@ -112,6 +115,15 @@ public class MonkeyWebView extends WebView {
             throw new MonkeyException("WebViewClient must be MonkeyWebViewClient or a subclass thereof");
         }
         super.setWebViewClient(client);
+        mMonkeyWebViewClient = (MonkeyWebViewClient) client;
+    }
+
+    public void addUrlInterceptor(MonkeyUrlInterceptor interceptor) {
+        mMonkeyWebViewClient.addInterceptor(interceptor);
+    }
+
+    public boolean removeUrlInterceptor(MonkeyUrlInterceptor interceptor) {
+        return mMonkeyWebViewClient.removeInterceptor(interceptor);
     }
 
 }

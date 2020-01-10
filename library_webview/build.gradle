@@ -11,8 +11,8 @@ android {
     defaultConfig {
         minSdkVersion config.minSdkVersion
         targetSdkVersion config.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0.2"
 
         testInstrumentationRunner library.AndroidJUnitRunner
         consumerProguardFiles 'consumer-rules.pro'
@@ -38,5 +38,5 @@ dependencies {
     androidTestImplementation library.test_espresso_core
 
     implementation library.support_annotations
-    api "com.google.code.gson:gson:2.8.5"
+    implementation library.gson
 }

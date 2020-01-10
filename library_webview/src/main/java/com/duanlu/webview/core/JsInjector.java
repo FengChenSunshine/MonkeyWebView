@@ -13,6 +13,7 @@ import com.duanlu.webview.callback.MonkeyCallback;
 import com.duanlu.webview.exception.MonkeyException;
 import com.duanlu.webview.plugin.BridgeMessage;
 import com.duanlu.webview.plugin.IBridge;
+import com.duanlu.webview.utils.MonkeyUtils;
 import com.google.gson.Gson;
 
 import java.lang.annotation.Annotation;
@@ -21,6 +22,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -119,7 +121,7 @@ public class JsInjector {
     }
 
     private String generateJsCode() {
-        Method[] methods = mBridgeClass.getDeclaredMethods();
+        List<Method> methods = MonkeyUtils.extractMethods(mBridgeClass);
         String methodSign;
         Set<String> statementJsVariable = new HashSet<>();
         for (Method method : methods) {

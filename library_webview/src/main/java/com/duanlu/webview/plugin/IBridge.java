@@ -12,7 +12,9 @@ import com.duanlu.webview.MonkeyWebView;
  ********************************/
 public interface IBridge extends LifecycleProxy {
 
-    String getInterfaceName();
+    default String getInterfaceName() {
+        return "AppBridge";
+    }
 
     void initialize(MonkeyWebView webView);
 

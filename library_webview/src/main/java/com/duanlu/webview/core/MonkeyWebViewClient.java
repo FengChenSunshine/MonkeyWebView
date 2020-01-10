@@ -15,6 +15,8 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.duanlu.webview.interceptor.MonkeyUrlInterceptor;
+
 /********************************
  * @name MonkeyWebViewClient
  * @author 段露
@@ -29,6 +31,14 @@ public class MonkeyWebViewClient extends WebViewClient {
 
     public MonkeyWebViewClient() {
         this.mInterceptorComposition = new MonkeyUrlInterceptorComposition();
+    }
+
+    public void addInterceptor(MonkeyUrlInterceptor interceptor) {
+        mInterceptorComposition.addInterceptor(interceptor);
+    }
+
+    public boolean removeInterceptor(MonkeyUrlInterceptor interceptor) {
+        return mInterceptorComposition.removeInterceptor(interceptor);
     }
 
     @Deprecated

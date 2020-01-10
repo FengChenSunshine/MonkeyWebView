@@ -27,6 +27,7 @@ public class MonkeyWebChromeClient extends WebChromeClient {
 
     private List<JsInjector> mJsInjectors;
     private int mInjectionThreshold;
+    private boolean isInjectionComplete;
 
     public MonkeyWebChromeClient() {
         this(DEFAULT_INJECTION_THRESHOLD);
@@ -38,7 +39,7 @@ public class MonkeyWebChromeClient extends WebChromeClient {
 
     @Override
     public void onProgressChanged(WebView view, int newProgress) {
-        if (newProgress > mInjectionThreshold) {
+        if (!isInjectionComplete && newProgress > mInjectionThreshold) {
             injection(view);
         }
     }
@@ -64,6 +65,7 @@ public class MonkeyWebChromeClient extends WebChromeClient {
                 mJsInjectors.add(jsInjector);
             }
         }
+        isInjectionComplete = true;
     }
 
     @Override
